@@ -10,8 +10,8 @@ export class FirstComponent implements OnInit {
 
   department: string = '';
   departments = [
-    { "code": "001", "name": "Mavel" },
-    { "code": "002", "name": "DC" }
+    { "code": 1, "name": "Mavel" },
+    { "code": 2, "name": "DC" }
   ];
 
   @Input()
