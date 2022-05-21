@@ -5,7 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FirstComponent } from './first/first.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PanelModule } from 'primeng/panel';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -13,8 +15,11 @@ import { FirstComponent } from './first/first.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    PanelModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

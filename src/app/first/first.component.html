@@ -7,3 +7,8 @@
 <div>
   <input type="text" [(ngModel)]="name">
 </div>
+
+
+<p-panel header="Title">
+  <p-dropdown [options]="departments" [(ngModel)]="department" optionLabel="name"></p-dropdown>
+</p-panel>

@@ -8,6 +8,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class FirstComponent implements OnInit {
 
+  department: string = '';
+  departments = [
+    { "code": "001", "name": "Mavel" },
+    { "code": "002", "name": "DC" }
+  ];
+
   @Input()
   name: string = 'sunny';
 
