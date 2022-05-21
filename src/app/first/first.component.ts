@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-first',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FirstComponent implements OnInit {
 
+  @Input()
   name: string = 'sunny';
+
+  @Output()
+  valueChange = new EventEmitter();
 
   constructor() { }
 
@@ -16,6 +21,7 @@ export class FirstComponent implements OnInit {
 
   onInput(event: Event) {
     this.name = (event.target as HTMLInputElement).value;
+    this.valueChange.emit(this.name);
   }
 
 }

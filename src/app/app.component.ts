@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'employee-ui';
+  name: string = '';
+  inputChange(event: string) {
+    console.log(event)
+    this.name = event;
+  }
 }
