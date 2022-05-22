@@ -14,8 +14,12 @@
     </div>
     <div class="col-6">
       <div class="grid">
-        <div *ngFor="let item of Gender | keyvalue" class="col-2">
-          <p-radioButton [value]="item.value" [label]="item.value" [(ngModel)]="gender">
+        <div class="col-2">
+          <p-radioButton value="Female" label="Female" [(ngModel)]="gender">
+          </p-radioButton>
+        </div>
+        <div class="col-2">
+          <p-radioButton value="Male" label="Male" [(ngModel)]="gender">
           </p-radioButton>
         </div>
       </div>

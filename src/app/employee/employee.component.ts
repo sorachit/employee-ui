@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Department } from '../model/department';
-import { Gender } from '../type/gender';
+
 
 @Component({
   selector: 'app-employee',
@@ -15,7 +15,6 @@ export class EmployeeComponent implements OnInit {
     { "code": 2, "name": "DC" }
   ];
 
-  Gender = Gender;
   gender?: string;
 
   firstName?: string;
