@@ -8,10 +8,14 @@ import { FirstComponent } from './first/first.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelModule } from 'primeng/panel';
 import { DropdownModule } from 'primeng/dropdown';
+import { EmployeeComponent } from './employee/employee.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextModule } from 'primeng/inputtext';
 @NgModule({
   declarations: [
     AppComponent,
-    FirstComponent
+    FirstComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +23,9 @@ import { DropdownModule } from 'primeng/dropdown';
     AppRoutingModule,
     FormsModule,
     PanelModule,
-    DropdownModule
+    DropdownModule,
+    RadioButtonModule,
+    InputTextModule
   ],
   providers: [],
   bootstrap: [AppComponent]
