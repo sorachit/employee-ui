@@ -37,4 +37,30 @@
       <input type="text" pInputText [(ngModel)]="lastName" />
     </div>
   </div>
+  <div class="grid">
+    <div class="col-1 col-offset-4">
+      <button pButton type="button" label="add" (click)="addEmployee()"></button>
+    </div>
+    <div class="col-1">
+      <button pButton type="button" label="reset" (click)="clearEmployee()"></button>
+    </div>
+  </div>
 </p-panel>
+<p-table [value]="getEmployee()" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>Gender</th>
+      <th>Department</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-employee>
+    <tr>
+      <td>{{employee.firstName}}</td>
+      <td>{{employee.lastName}}</td>
+      <td>{{employee.gender}}</td>
+      <td>{{employee.department.name}}</td>
+    </tr>
+  </ng-template>
+</p-table>

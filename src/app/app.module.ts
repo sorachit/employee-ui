@@ -11,6 +11,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { EmployeeComponent } from './employee/employee.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,9 @@ import { InputTextModule } from 'primeng/inputtext';
     PanelModule,
     DropdownModule,
     RadioButtonModule,
-    InputTextModule
+    InputTextModule,
+    ButtonModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
