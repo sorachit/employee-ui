@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
@@ -26,7 +27,7 @@ export class SearchEmployeeComponent implements OnInit {
 
 
   employees: Employee[] = [];
-  constructor(private employeeService: EmployeeService) {
+  constructor(private employeeService: EmployeeService, private router: Router) {
 
   }
 
@@ -43,6 +44,10 @@ export class SearchEmployeeComponent implements OnInit {
     this.employeeService.getEmployees(employee).subscribe(response => {
       this.employees = response;
     });
+  }
+
+  gotoSave() {
+    this.router.navigate(['/employee/save']);
   }
 
   addEmployee() {
