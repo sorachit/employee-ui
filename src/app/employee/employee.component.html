@@ -38,15 +38,12 @@
     </div>
   </div>
   <div class="grid">
-    <div class="col-1 col-offset-4">
-      <button pButton type="button" label="add" (click)="addEmployee()"></button>
-    </div>
     <div class="col-1">
-      <button pButton type="button" label="reset" (click)="clearEmployee()"></button>
+      <button pButton type="button" label="search" (click)="getEmployee()"></button>
     </div>
   </div>
 </p-panel>
-<p-table [value]="getEmployee()" responsiveLayout="scroll">
+<p-table [value]="employees" responsiveLayout="scroll">
   <ng-template pTemplate="header">
     <tr>
       <th>FirstName</th>

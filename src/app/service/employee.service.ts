@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Employee } from '../model/employee';
 
@@ -7,20 +8,33 @@ import { Employee } from '../model/employee';
 export class EmployeeService {
 
 
-  employees: Employee[] = [];
+  // employees: Employee[] = [];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  addEmployee(employee: Employee) {
-    this.employees.push(employee);
+  addEmployee(employee: Employee): void {
+
   }
 
-  getEmployees() {
-    return this.employees;
+  getEmployees(employee: Employee) {
+    let httpParams = new HttpParams();
+    if (employee.firstName) {
+      httpParams = httpParams.append('firstName', employee.firstName);
+    }
+    if (employee.lastName) {
+      httpParams = httpParams.append('lastName', employee.lastName);
+    }
+    if (employee.gender) {
+      httpParams = httpParams.append('gender', employee.gender);
+    }
+    if (employee.department) {
+      httpParams = httpParams.append('department', employee.department.code);
+    }
+    return this.http.get<Employee[]>('/employee/search', { params: httpParams });
   }
 
-  clearEmployee() {
-    this.employees = [];
-  }
+  // clearEmployee() {
+  //   this.employees = [];
+  // }
 
 }

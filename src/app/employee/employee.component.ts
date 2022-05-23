@@ -24,6 +24,7 @@ export class EmployeeComponent implements OnInit {
   lastName?: string;
 
 
+  employees: Employee[] = [];
   constructor(private employeeService: EmployeeService) {
 
   }
@@ -32,7 +33,15 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployee() {
-    return this.employeeService.getEmployees();
+    const employee = {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      gender: this.gender,
+      department: this.department
+    } as Employee;
+    this.employeeService.getEmployees(employee).subscribe(response => {
+      this.employees = response;
+    });
   }
 
   addEmployee() {
@@ -47,7 +56,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   clearEmployee() {
-    this.employeeService.clearEmployee();
+    // this.employeeService.clearEmployee();
   }
 
 }
