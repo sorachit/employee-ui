@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
 import { Gender } from 'src/app/type/gender';
+import { customName } from 'src/app/validate/custom-name';
 
 @Component({
   selector: 'app-save-employee',
@@ -20,10 +21,10 @@ export class SaveEmployeeComponent implements OnInit {
 
   employeeForm: FormGroup = new FormGroup({
     id: new FormControl(),
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    gender: new FormControl(),
-    department: new FormControl(),
+    firstName: new FormControl(null, [Validators.required, Validators.minLength(2), customName]),
+    lastName: new FormControl(null, Validators.required),
+    gender: new FormControl(Gender.MALE),
+    department: new FormControl(null, Validators.required),
   })
 
   constructor(private employeeService: EmployeeService) { }
@@ -34,9 +35,10 @@ export class SaveEmployeeComponent implements OnInit {
 
   saveEmployee() {
     const employee = this.employeeForm.value as Employee;
-    this.employeeService.addEmployee(employee).subscribe(response => {
-
-    });
+    if (this.employeeForm.valid) {
+      this.employeeService.addEmployee(employee).subscribe(response => {
+      });
+    }
   }
 
   clearEmployee() {
