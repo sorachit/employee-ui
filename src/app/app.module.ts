@@ -16,13 +16,15 @@ import { FirstComponent } from './first/first.component';
 import { SaveEmployeeComponent } from './employee/save-employee/save-employee.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SearchEmployeeComponent } from './employee/search-employee/search-employee.component';
+import { GenderPipe } from './pipe/gender.pipe';
 @NgModule({
   declarations: [
     AppComponent,
     FirstComponent,
     EmployeeComponent,
     SaveEmployeeComponent,
-    SearchEmployeeComponent
+    SearchEmployeeComponent,
+    GenderPipe
   ],
   imports: [
     BrowserModule,

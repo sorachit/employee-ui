@@ -15,7 +15,7 @@
     <div class="col-6">
       <div class="grid">
         <div *ngFor="let item of Gender | keyvalue" class="col-2">
-          <p-radioButton [value]="item.value" [label]="item.value" [(ngModel)]="gender">
+          <p-radioButton [value]="item.value" [label]="item.value | gender" [(ngModel)]="gender">
           </p-radioButton>
         </div>
       </div>
@@ -61,7 +61,7 @@
     <tr>
       <td>{{employee.firstName}}</td>
       <td>{{employee.lastName}}</td>
-      <td>{{employee.gender}}</td>
+      <td>{{employee.gender | gender}}</td>
       <td>{{employee.department.name}}</td>
     </tr>
   </ng-template>
