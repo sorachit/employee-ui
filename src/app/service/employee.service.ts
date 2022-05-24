@@ -12,8 +12,8 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  addEmployee(employee: Employee): void {
-
+  addEmployee(employee: Employee) {
+    return this.http.post<Employee[]>('/api/employee', employee);
   }
 
   getEmployees(employee: Employee) {

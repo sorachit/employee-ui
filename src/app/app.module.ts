@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
@@ -36,9 +36,11 @@ import { SearchEmployeeComponent } from './employee/search-employee/search-emplo
     ButtonModule,
     TableModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   // https://www.infinetsoft.com/Post/When-reload-the-page-I-got-404-error-for-angular-10/3084#.YouOxahBy5c
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  //{ provide: LocationStrategy, useClass: HashLocationStrategy }
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
