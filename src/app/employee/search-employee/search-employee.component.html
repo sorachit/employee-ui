@@ -38,13 +38,13 @@
     </div>
   </div>
   <div class="grid">
-    <div class="col-1">
+    <div class="col-1 col-offset-6">
       <button pButton type="button" label="search" (click)="getEmployee()"></button>
     </div>
-    <div class="col-1">
-
+  </div>
+  <div class="grid">
+    <div class="col-1 col-offset-11">
       <button pButton pRipple label="Add" (click)="gotoSave()"></button>
-
     </div>
   </div>
 </p-panel>
@@ -63,6 +63,9 @@
       <td>{{employee.lastName}}</td>
       <td>{{employee.gender | gender}}</td>
       <td>{{employee.department.name}}</td>
+      <td class="flex-space-around">
+        <a class="pi pi-pencil" [routerLink]="['/employee/edit' , employee.id ]"></a>
+      </td>
     </tr>
   </ng-template>
 </p-table>

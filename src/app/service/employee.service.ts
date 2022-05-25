@@ -13,8 +13,17 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   addEmployee(employee: Employee) {
-    return this.http.post<Employee[]>('/api/employee', employee);
+    return this.http.post<Employee>('/api/employee', employee);
   }
+
+  editEmployee(employee: Employee) {
+    return this.http.put<Employee>(`/api/employee/${employee.id}`, employee);
+  }
+
+  getEmployeeById(id: number) {
+    return this.http.get<Employee>(`/api/employee/${id}`);
+  }
+
 
   getEmployees(employee: Employee) {
     let httpParams = new HttpParams();
