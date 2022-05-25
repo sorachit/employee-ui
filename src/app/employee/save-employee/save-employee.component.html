@@ -64,6 +64,11 @@
         <button pButton pRipple label="Save" (click)="saveEmployee()"></button>
 
       </div>
+      <div class="col-1" *ngIf="Mode.EDIT === mode">
+
+        <button pButton pRipple label="Remove" (click)="deleteEmployee()"></button>
+
+      </div>
     </div>
   </form>
 </p-panel>

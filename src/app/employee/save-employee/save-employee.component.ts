@@ -62,8 +62,11 @@ export class SaveEmployeeComponent implements OnInit {
     }
   }
 
-  clearEmployee() {
-    // this.employeeService.clearEmployee();
+  deleteEmployee() {
+    const id = this.employeeForm.get("id")?.value;
+    this.employeeService.deleteEmployee(id).subscribe(response => {
+
+    });
   }
 
 }

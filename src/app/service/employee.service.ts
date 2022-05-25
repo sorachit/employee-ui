@@ -42,8 +42,8 @@ export class EmployeeService {
     return this.http.get<Employee[]>('/api/employee/search', { params: httpParams });
   }
 
-  // clearEmployee() {
-  //   this.employees = [];
-  // }
+  deleteEmployee(id: number) {
+    return this.http.delete(`/api/employee/${id}`);
+  }
 
 }
