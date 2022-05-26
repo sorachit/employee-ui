@@ -27,6 +27,10 @@ export class SearchEmployeeComponent implements OnInit, OnDestroy {
   subscribeEmployees!: Subscription
 
   employees: Employee[] = [];
+  selectedEmployees: Employee[] = [];
+
+  isLoading: boolean = false; // คุมการทำงานของปุ่ม ว่าให้ขึ้น loading หรือไม่
+
   constructor(private employeeService: EmployeeService, private router: Router) {
 
   }
@@ -51,19 +55,32 @@ export class SearchEmployeeComponent implements OnInit, OnDestroy {
   }
 
   queryEmployees() {
+    this.isLoading = true
     const employee = {
       firstName: this.firstName,
       lastName: this.lastName,
       gender: this.gender,
       department: this.department
     } as Employee;
-    this.employeeService.queryEmployees(employee)
+    this.employeeService.queryEmployees(employee).subscribe(() => {
+      this.isLoading = false
+    });
   }
 
   gotoSave() {
     this.router.navigate(['/employee/save']);
   }
 
+  deleteEmployees() {
+    this.isLoading = true;
+    const ids: number[] = this.selectedEmployees.map(employee => {
+      return employee.id;
+    });
+    this.employeeService.deleteEmployees(ids).subscribe(() => {
+      this.isLoading = false;
+      this.selectedEmployees = []; // ล้างค่า array ที่เลือกมา
+    });
+  }
 
 
 

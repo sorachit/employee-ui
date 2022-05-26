@@ -13,7 +13,6 @@ export class EmployeeService {
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
   addEmployee(employee: Employee) {
-    delete employee['id'];
     return this.http.post<Employee>('/api/employee', employee).pipe(
       tap(response => {
         this.employee$.next(response);
@@ -103,9 +102,11 @@ export class EmployeeService {
     if (employee.department) {
       httpParams = httpParams.append('department', employee.department.code);
     }
-    this.http.get<Employee[]>('/api/employee/search', { params: httpParams }).subscribe(response => {
-      this.employees$.next(response);
-    });
+    return this.http.get<Employee[]>('/api/employee/search', { params: httpParams }).pipe(
+      tap(response => {
+        this.employees$.next(response);
+      })
+    );
   }
 
   deleteEmployee(id: number) {
@@ -115,6 +116,19 @@ export class EmployeeService {
         this.employees$.next(
           // filter Employee[] ด้วย id แล้วเอา Employee[] ที่เหลือใส่เข้าไปที่ BehaviorSubject เพื่อ update Table
           this.employees$.value.filter((employee: Employee) => employee.id !== id)
+        );
+        this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Delete employee success.' })
+      })
+    );
+  }
+
+
+  deleteEmployees(ids: number[]) {
+    return this.http.delete('/api/employee', { body: ids }).pipe(
+      tap(() => {
+        this.employees$.next(
+          // filter Employee[] ด้วย id แล้วเอา Employee[] ที่เหลือใส่เข้าไปที่ BehaviorSubject เพื่อ update Table
+          this.employees$.value.filter((employee: Employee) => !ids.includes(employee.id))
         );
         this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Delete employee success.' })
       })

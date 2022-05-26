@@ -43,14 +43,20 @@
     </div>
   </div>
   <div class="grid">
-    <div class="col-1 col-offset-11">
+    <div class="col-1">
+      <button pButton pRipple label="Delete" (click)="deleteEmployees()"></button>
+    </div>
+    <div class="col-1 col-offset-10">
       <button pButton pRipple label="Add" (click)="gotoSave()"></button>
     </div>
   </div>
 </p-panel>
-<p-table [value]="employees" responsiveLayout="scroll">
+<p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="id">
   <ng-template pTemplate="header">
     <tr>
+      <th style="width: 3rem" id="checkbox">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
       <th>FirstName</th>
       <th>LastName</th>
       <th>Gender</th>
@@ -60,6 +66,9 @@
   </ng-template>
   <ng-template pTemplate="body" let-employee>
     <tr>
+      <td>
+        <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+      </td>
       <td>{{employee.firstName}}</td>
       <td>{{employee.lastName}}</td>
       <td>{{employee.gender | gender}}</td>
@@ -67,6 +76,11 @@
       <td class="flex-space-around">
         <a class="pi pi-pencil" [routerLink]="['/employee/edit' , employee.id ]"></a>
       </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8" style="color:red">No Employee Found.</td>
     </tr>
   </ng-template>
 </p-table>
