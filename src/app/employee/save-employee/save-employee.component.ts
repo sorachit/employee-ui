@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -14,12 +14,9 @@ import { customName } from 'src/app/validate/custom-name';
   templateUrl: './save-employee.component.html',
   styleUrls: ['./save-employee.component.scss']
 })
-export class SaveEmployeeComponent implements OnInit {
+export class SaveEmployeeComponent implements OnInit, OnDestroy {
 
-  departments: Department[] = [
-    { "code": 1, "name": "Mavel" },
-    { "code": 2, "name": "DC" }
-  ];
+  departments: Department[] = [];
   Gender = Gender;
 
   employeeForm: FormGroup = new FormGroup({
@@ -32,9 +29,18 @@ export class SaveEmployeeComponent implements OnInit {
   mode!: Mode;
   Mode = Mode;
 
+  subscribeDepartment: any
   constructor(private employeeService: EmployeeService, private activeRoute: ActivatedRoute, private messageService: MessageService) { }
 
+
   ngOnInit(): void {
+
+    this.employeeService.callApiGetDepartment();
+
+    this.subscribeDepartment = this.employeeService.getDepartment().subscribe(response => {
+      this.departments = response;
+    });
+
     const { mode } = this.activeRoute.snapshot.data;
     this.mode = mode;
     const { id } = this.activeRoute.snapshot.params;
@@ -47,6 +53,9 @@ export class SaveEmployeeComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.subscribeDepartment.unsubscribe();
+  }
 
   saveEmployee() {
     const employee = this.employeeForm.value as Employee;
@@ -71,5 +80,6 @@ export class SaveEmployeeComponent implements OnInit {
       this.messageService.add({ severity: 'success', summary: 'Remove Message', detail: 'Remove employee success' });
     });
   }
+
 
 }

@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, tap } from 'rxjs';
+import { Department } from '../model/department';
 import { Employee } from '../model/employee';
 
 @Injectable({
@@ -22,6 +24,21 @@ export class EmployeeService {
 
   getEmployeeById(id: number) {
     return this.http.get<Employee>(`/api/employee/${id}`);
+  }
+
+  // ต้องการเก็บ Category[] เอาไว้เพื่อจะได้ไม่ต้อง query ใหม่
+  private departments$ = new BehaviorSubject<Department[]>([]);
+
+  callApiGetDepartment() {
+    if (this.departments$.value.length === 0) {
+      this.http.get<Department[]>('/api/department').subscribe(response => {
+        this.departments$.next(response)
+      });
+    }
+  }
+
+  getDepartment() {
+    return this.departments$;
   }
 
 

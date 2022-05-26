@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
@@ -10,14 +10,11 @@ import { Gender } from 'src/app/type/gender';
   templateUrl: './search-employee.component.html',
   styleUrls: ['./search-employee.component.scss']
 })
-export class SearchEmployeeComponent implements OnInit {
+export class SearchEmployeeComponent implements OnInit, OnDestroy {
 
 
   department?: Department;
-  departments: Department[] = [
-    { "code": 1, "name": "Mavel" },
-    { "code": 2, "name": "DC" }
-  ];
+  departments: Department[] = [];
 
   Gender = Gender;
   gender?: Gender;
@@ -25,6 +22,7 @@ export class SearchEmployeeComponent implements OnInit {
   firstName?: string;
   lastName?: string;
 
+  subscribeDepartment: any
 
   employees: Employee[] = [];
   constructor(private employeeService: EmployeeService, private router: Router) {
@@ -32,6 +30,17 @@ export class SearchEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.employeeService.callApiGetDepartment();
+
+    this.subscribeDepartment = this.employeeService.getDepartment().subscribe(response => {
+      this.departments = response;
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscribeDepartment.unsubscribe();
   }
 
   getEmployee() {
