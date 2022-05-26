@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
@@ -29,7 +30,9 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
   mode!: Mode;
   Mode = Mode;
 
-  subscribeDepartment: any
+  subscribeDepartment!: Subscription
+  subscribeEmployee!: Subscription
+  isLoading!: boolean;
   constructor(private employeeService: EmployeeService, private activeRoute: ActivatedRoute, private messageService: MessageService) { }
 
 
@@ -41,34 +44,55 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
       this.departments = response;
     });
 
+    this.subscribeEmployee = this.employeeService.getEmployee().subscribe(response => {
+      console.log('subscribe getEmployee patchValue', response);
+      this.employeeForm.patchValue(response);
+    });
+
     const { mode } = this.activeRoute.snapshot.data;
     this.mode = mode;
     const { id } = this.activeRoute.snapshot.params;
     if (id && Mode.EDIT === mode) {
-      this.employeeService.getEmployeeById(id).subscribe(response => {
-        this.employeeForm.patchValue(response);
-      });
+      console.log('queryEmployeeById', id);
+      this.employeeService.queryEmployeeById(id);
     }
-
-
   }
 
   ngOnDestroy(): void {
     this.subscribeDepartment.unsubscribe();
+    this.subscribeEmployee.unsubscribe();
   }
 
   saveEmployee() {
+    this.isLoading = true;
     const employee = this.employeeForm.value as Employee;
     if (this.employeeForm.valid) {
       if (Mode.EDIT === this.mode) {
-        this.employeeService.editEmployee(employee).subscribe(response => {
-          this.employeeForm.patchValue(response);
-          this.messageService.add({ severity: 'success', summary: 'Edit Message', detail: 'Edit employee success.' });
+        this.employeeService.editEmployee(employee).subscribe({
+          next: (v) => {
+            console.log('next editEmployee');
+          },
+          complete: () => {
+            console.log('complete editDevice');
+            this.isLoading = false;
+          }, error: (e) => {
+            console.log('error editDevice');
+            this.isLoading = false;
+          }
         });
       } else {
-        this.employeeService.addEmployee(employee).subscribe(response => {
-          this.employeeForm.patchValue(response);
-          this.messageService.add({ severity: 'success', summary: 'Add Message', detail: 'Add employee success.' });
+        this.employeeService.addEmployee(employee).subscribe({
+          next: (v) => {
+            console.log('next addEmployee');
+          },
+          complete: () => {
+            console.log('complete addDevice');
+            this.mode = Mode.EDIT
+            this.isLoading = false;
+          }, error: (e) => {
+            console.log('error addDevice');
+            this.isLoading = false;
+          }
         });
       }
     }
@@ -76,8 +100,18 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
 
   deleteEmployee() {
     const id = this.employeeForm.get("id")?.value;
-    this.employeeService.deleteEmployee(id).subscribe(response => {
-      this.messageService.add({ severity: 'success', summary: 'Remove Message', detail: 'Remove employee success' });
+    this.employeeService.deleteEmployee(id).subscribe({
+      next: (v) => {
+        console.log('next addEmployee');
+      },
+      complete: () => {
+        console.log('complete addDevice');
+        this.mode = Mode.ADD
+        this.isLoading = false;
+      }, error: (e) => {
+        console.log('error addDevice');
+        this.isLoading = false;
+      }
     });
   }
 

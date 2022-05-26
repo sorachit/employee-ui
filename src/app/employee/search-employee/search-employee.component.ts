@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
@@ -22,7 +23,8 @@ export class SearchEmployeeComponent implements OnInit, OnDestroy {
   firstName?: string;
   lastName?: string;
 
-  subscribeDepartment: any
+  subscribeDepartment!: Subscription
+  subscribeEmployees!: Subscription
 
   employees: Employee[] = [];
   constructor(private employeeService: EmployeeService, private router: Router) {
@@ -37,22 +39,25 @@ export class SearchEmployeeComponent implements OnInit, OnDestroy {
       this.departments = response;
     });
 
+    this.subscribeEmployees = this.employeeService.getEmployees().subscribe(employees => {
+      this.employees = employees
+    })
+
   }
 
   ngOnDestroy(): void {
     this.subscribeDepartment.unsubscribe();
+    this.subscribeEmployees.unsubscribe();
   }
 
-  getEmployee() {
+  queryEmployees() {
     const employee = {
       firstName: this.firstName,
       lastName: this.lastName,
       gender: this.gender,
       department: this.department
     } as Employee;
-    this.employeeService.getEmployees(employee).subscribe(response => {
-      this.employees = response;
-    });
+    this.employeeService.queryEmployees(employee)
   }
 
   gotoSave() {
