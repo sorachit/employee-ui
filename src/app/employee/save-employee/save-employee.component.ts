@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
@@ -31,7 +32,7 @@ export class SaveEmployeeComponent implements OnInit {
   mode!: Mode;
   Mode = Mode;
 
-  constructor(private employeeService: EmployeeService, private activeRoute: ActivatedRoute) { }
+  constructor(private employeeService: EmployeeService, private activeRoute: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit(): void {
     const { mode } = this.activeRoute.snapshot.data;
@@ -53,10 +54,12 @@ export class SaveEmployeeComponent implements OnInit {
       if (Mode.EDIT === this.mode) {
         this.employeeService.editEmployee(employee).subscribe(response => {
           this.employeeForm.patchValue(response);
+          this.messageService.add({ severity: 'success', summary: 'Edit Message', detail: 'Edit employee success.' });
         });
       } else {
         this.employeeService.addEmployee(employee).subscribe(response => {
           this.employeeForm.patchValue(response);
+          this.messageService.add({ severity: 'success', summary: 'Add Message', detail: 'Add employee success.' });
         });
       }
     }
@@ -65,7 +68,7 @@ export class SaveEmployeeComponent implements OnInit {
   deleteEmployee() {
     const id = this.employeeForm.get("id")?.value;
     this.employeeService.deleteEmployee(id).subscribe(response => {
-
+      this.messageService.add({ severity: 'success', summary: 'Remove Message', detail: 'Remove employee success' });
     });
   }
 

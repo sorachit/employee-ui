@@ -17,6 +17,8 @@ import { SaveEmployeeComponent } from './employee/save-employee/save-employee.co
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SearchEmployeeComponent } from './employee/search-employee/search-employee.component';
 import { GenderPipe } from './pipe/gender.pipe';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,11 +40,12 @@ import { GenderPipe } from './pipe/gender.pipe';
     ButtonModule,
     TableModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastModule
   ],
   // https://www.infinetsoft.com/Post/When-reload-the-page-I-got-404-error-for-angular-10/3084#.YouOxahBy5c
   //{ provide: LocationStrategy, useClass: HashLocationStrategy }
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
