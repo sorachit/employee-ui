@@ -30,7 +30,7 @@ export class EmployeeService {
     if (employee.department) {
       httpParams = httpParams.append('department', employee.department.code);
     }
-    return this.http.get<Employee[]>('/employee/search', { params: httpParams });
+    return this.http.get<Employee[]>('/api/employee/search', { params: httpParams });
   }
 
   // clearEmployee() {
