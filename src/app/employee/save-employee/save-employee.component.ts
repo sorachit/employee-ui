@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
+import { DepartmentService } from 'src/app/service/department.service';
 import { EmployeeService } from 'src/app/service/employee.service';
 import { Gender } from 'src/app/type/gender';
 import { Mode } from 'src/app/type/mode';
@@ -33,14 +34,14 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
   subscribeDepartment!: Subscription
   subscribeEmployee!: Subscription
   isLoading!: boolean;
-  constructor(private employeeService: EmployeeService, private activeRoute: ActivatedRoute, private messageService: MessageService) { }
+  constructor(private employeeService: EmployeeService, private departmentService: DepartmentService, private activeRoute: ActivatedRoute, private messageService: MessageService) { }
 
 
   ngOnInit(): void {
 
-    this.employeeService.callApiGetDepartment();
+    this.departmentService.callApiGetDepartment();
 
-    this.subscribeDepartment = this.employeeService.getDepartment().subscribe(response => {
+    this.subscribeDepartment = this.departmentService.getDepartment().subscribe(response => {
       this.departments = response;
     });
 

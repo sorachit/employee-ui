@@ -66,21 +66,6 @@ export class EmployeeService {
     }
   }
 
-  // ต้องการเก็บ department[] เอาไว้เพื่อจะได้ไม่ต้อง query ใหม่
-  private departments$ = new BehaviorSubject<Department[]>([]);
-
-  callApiGetDepartment() {
-    if (this.departments$.value.length === 0) {
-      this.http.get<Department[]>('/api/department').subscribe(response => {
-        this.departments$.next(response)
-      });
-    }
-  }
-
-  getDepartment() {
-    return this.departments$;
-  }
-
   // ต้องการเก็บ employees[] เอาไว้เพื่อจะได้ไม่ต้อง query ใหม่
   private employees$ = new BehaviorSubject<Employee[]>([]);
 
@@ -91,10 +76,10 @@ export class EmployeeService {
   queryEmployees(employee: Employee) {
     let httpParams = new HttpParams();
     if (employee.firstName) {
-      httpParams = httpParams.append('firstName', employee.firstName);
+      httpParams = httpParams.append('firstName', `%${employee.firstName}%`);
     }
     if (employee.lastName) {
-      httpParams = httpParams.append('lastName', employee.lastName);
+      httpParams = httpParams.append('lastName', `%${employee.lastName}%`);
     }
     if (employee.gender) {
       httpParams = httpParams.append('gender', employee.gender);

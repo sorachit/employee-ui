@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subject, Subscription, switchMap } from 'rxjs';
 import { Department } from 'src/app/model/department';
 import { Employee } from 'src/app/model/employee';
+import { DepartmentService } from 'src/app/service/department.service';
 import { EmployeeService } from 'src/app/service/employee.service';
 import { Gender } from 'src/app/type/gender';
 
@@ -12,16 +14,8 @@ import { Gender } from 'src/app/type/gender';
   styleUrls: ['./search-employee.component.scss']
 })
 export class SearchEmployeeComponent implements OnInit, OnDestroy {
-
-
-  department?: Department;
   departments: Department[] = [];
-
   Gender = Gender;
-  gender?: Gender;
-
-  firstName?: string;
-  lastName?: string;
 
   subscribeDepartment!: Subscription
   subscribeEmployees!: Subscription
@@ -31,15 +25,26 @@ export class SearchEmployeeComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = false; // คุมการทำงานของปุ่ม ว่าให้ขึ้น loading หรือไม่
 
-  constructor(private employeeService: EmployeeService, private router: Router) {
+  employeeForm: FormGroup = new FormGroup({
+    id: new FormControl(),
+    firstName: new FormControl(null),
+    lastName: new FormControl(null),
+    gender: new FormControl(Gender.MALE),
+    department: new FormControl(null),
+  })
+
+  constructor(private employeeService: EmployeeService, private departmentService: DepartmentService, private router: Router) {
 
   }
 
+
+
+
   ngOnInit(): void {
 
-    this.employeeService.callApiGetDepartment();
+    this.departmentService.callApiGetDepartment();
 
-    this.subscribeDepartment = this.employeeService.getDepartment().subscribe(response => {
+    this.subscribeDepartment = this.departmentService.getDepartment().subscribe(response => {
       this.departments = response;
     });
 
@@ -47,24 +52,18 @@ export class SearchEmployeeComponent implements OnInit, OnDestroy {
       this.employees = employees
     })
 
+    //https://www.credera.com/insights/using-rxjs-switchmap-angular-7-reactive-forms-cancel-pending-requests
+    this.employeeForm.valueChanges.pipe(
+      debounceTime(200),
+      switchMap(() => this.employeeService.queryEmployees(this.employeeForm.value))
+    ).subscribe();
   }
+
+
 
   ngOnDestroy(): void {
     this.subscribeDepartment.unsubscribe();
     this.subscribeEmployees.unsubscribe();
-  }
-
-  queryEmployees() {
-    this.isLoading = true
-    const employee = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      gender: this.gender,
-      department: this.department
-    } as Employee;
-    this.employeeService.queryEmployees(employee).subscribe(() => {
-      this.isLoading = false
-    });
   }
 
   gotoSave() {

@@ -1,55 +1,53 @@
 <p-panel header="SEARCH">
-  <div class="grid">
-    <div class="col-2">
-      Department
+  <form [formGroup]="employeeForm">
+    <div class="grid">
+      <div class="col-2">
+        Department
+      </div>
+      <div class="col-4">
+        <p-dropdown placeholder="Select a Department" [options]="departments" formControlName="department"
+          optionLabel="name">
+        </p-dropdown>
+      </div>
     </div>
-    <div class="col-4">
-      <p-dropdown placeholder="Select a Department" [options]="departments" [(ngModel)]="department" optionLabel="name">
-      </p-dropdown>
-    </div>
-  </div>
-  <div class="grid">
-    <div class="col-2">
-      Gender
-    </div>
-    <div class="col-6">
-      <div class="grid">
-        <div *ngFor="let item of Gender | keyvalue" class="col-2">
-          <p-radioButton [value]="item.value" [label]="item.value | gender" [(ngModel)]="gender">
-          </p-radioButton>
+    <div class="grid">
+      <div class="col-2">
+        Gender
+      </div>
+      <div class="col-6">
+        <div class="grid">
+          <div *ngFor="let item of Gender | keyvalue" class="col-2">
+            <p-radioButton [value]="item.value" [label]="item.value | gender" formControlName="gender">
+            </p-radioButton>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="grid">
-    <div class="col-2">
-      FirstName
+    <div class="grid">
+      <div class="col-2">
+        FirstName
+      </div>
+      <div class="col-4">
+        <input type="text" pInputText formControlName="firstName" />
+      </div>
     </div>
-    <div class="col-4">
-      <input type="text" pInputText [(ngModel)]="firstName" />
+    <div class="grid">
+      <div class="col-2">
+        LastName
+      </div>
+      <div class="col-4">
+        <input type="text" pInputText formControlName="lastName" />
+      </div>
     </div>
-  </div>
-  <div class="grid">
-    <div class="col-2">
-      Gender
+    <div class="grid">
+      <div class="col-1">
+        <button pButton pRipple label="Delete" (click)="deleteEmployees()"></button>
+      </div>
+      <div class="col-1 col-offset-10">
+        <button pButton pRipple label="Add" (click)="gotoSave()"></button>
+      </div>
     </div>
-    <div class="col-4">
-      <input type="text" pInputText [(ngModel)]="lastName" />
-    </div>
-  </div>
-  <div class="grid">
-    <div class="col-1 col-offset-6">
-      <button pButton type="button" label="search" (click)="queryEmployees()"></button>
-    </div>
-  </div>
-  <div class="grid">
-    <div class="col-1">
-      <button pButton pRipple label="Delete" (click)="deleteEmployees()"></button>
-    </div>
-    <div class="col-1 col-offset-10">
-      <button pButton pRipple label="Add" (click)="gotoSave()"></button>
-    </div>
-  </div>
+  </form>
 </p-panel>
 <p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="id">
   <ng-template pTemplate="header">
