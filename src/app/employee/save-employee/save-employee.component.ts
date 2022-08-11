@@ -74,10 +74,10 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
             console.log('next editEmployee');
           },
           complete: () => {
-            console.log('complete editDevice');
+            console.log('complete editEmployee');
             this.isLoading = false;
           }, error: (e) => {
-            console.log('error editDevice');
+            console.log('error editEmployee');
             this.isLoading = false;
           }
         });
@@ -87,11 +87,11 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
             console.log('next addEmployee');
           },
           complete: () => {
-            console.log('complete addDevice');
+            console.log('complete addEmployee');
             this.mode = Mode.EDIT
             this.isLoading = false;
           }, error: (e) => {
-            console.log('error addDevice');
+            console.log('error addEmployee');
             this.isLoading = false;
           }
         });
@@ -103,14 +103,14 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
     const id = this.employeeForm.get("id")?.value;
     this.employeeService.deleteEmployee(id).subscribe({
       next: (v) => {
-        console.log('next addEmployee');
+        console.log('next deleteEmployee');
       },
       complete: () => {
-        console.log('complete addDevice');
+        console.log('complete deleteEmployee');
         this.mode = Mode.ADD
         this.isLoading = false;
       }, error: (e) => {
-        console.log('error addDevice');
+        console.log('error deleteEmployee');
         this.isLoading = false;
       }
     });

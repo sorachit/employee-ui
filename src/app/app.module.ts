@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,6 +19,7 @@ import { SearchEmployeeComponent } from './employee/search-employee/search-emplo
 import { GenderPipe } from './pipe/gender.pipe';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ErrorInterceptor } from './error-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,7 @@ import { MessageService } from 'primeng/api';
   ],
   // https://www.infinetsoft.com/Post/When-reload-the-page-I-got-404-error-for-angular-10/3084#.YouOxahBy5c
   //{ provide: LocationStrategy, useClass: HashLocationStrategy }
-  providers: [MessageService],
+  providers: [MessageService, { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
