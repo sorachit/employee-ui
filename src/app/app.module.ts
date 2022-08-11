@@ -38,7 +38,7 @@ import { SearchEmployeeComponent } from './employee/search-employee/search-emplo
     HttpClientModule,
   ],
   // https://www.infinetsoft.com/Post/When-reload-the-page-I-got-404-error-for-angular-10/3084#.YouOxahBy5c
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  // providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
