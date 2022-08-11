@@ -27,6 +27,7 @@ export class SaveEmployeeComponent implements OnInit, OnDestroy {
     lastName: new FormControl(null, Validators.required),
     gender: new FormControl(Gender.MALE),
     department: new FormControl(null, Validators.required),
+    version: new FormControl()
   })
   mode!: Mode;
   Mode = Mode;
