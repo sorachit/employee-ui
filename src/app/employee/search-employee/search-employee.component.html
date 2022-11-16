@@ -49,7 +49,9 @@
     </div>
   </form>
 </p-panel>
-<p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="id">
+<p-table [value]="employees" [(selection)]="selectedEmployees" dataKey="id" [paginator]="true" [rows]="10"
+  [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[10,25,50]">
   <ng-template pTemplate="header">
     <tr>
       <th style="width: 3rem" id="checkbox">
