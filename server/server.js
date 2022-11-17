@@ -46,6 +46,6 @@ server.get('/api/department/*', (req, res, next) => {
   res.status(200).send(department.getDepartments);
 });
 
-server.listen(3000, () => {
+server.listen(8080, () => {
   console.log('JSON server listening on port 3000');
 });
