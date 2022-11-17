@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "firstName": "Tony",
+  "lastName": "Stark",
+  "gender": "M",
+  "department": {
+    "code": 2,
+    "name": "DC"
+  },
+  "version": 0
+}
