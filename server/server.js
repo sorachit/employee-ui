@@ -16,7 +16,7 @@ server.get('/api/employee/search*', (req, res, next) => {
   res.status(200).send(userData.getEmployees);
 });
 
-server.get('/api/employee/2', (req, res, next) => {
+server.get('/api/employee/1', (req, res, next) => {
   res.status(200).send(userData.getEmployee);
 });
 
@@ -46,6 +46,6 @@ server.get('/api/department/*', (req, res, next) => {
   res.status(200).send(department.getDepartments);
 });
 
-server.listen(8080, () => {
-  console.log('JSON server listening on port 8080');
+server.listen(3000, () => {
+  console.log('JSON server listening on port 3000');
 });
